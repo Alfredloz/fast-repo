@@ -1,0 +1,118 @@
+Istruzioni Italiano!
+Buonsalve amici!
+Ho cercato di capire come facilitare e velocizzare la creazione e compilazione delle cartelle necessarie per i nostri progetti di lavoro (le nostre repo)
+
+Questa piccola guida vi aiuterà( per ora solo su MAC) a migliorare il vostro flusso di lavoro.
+
+#!ATTENZIONE FUNZIONA SOLO SU MAC!
+
+STEPS:
+1) premessa: prima di tutto bisogna capire che stiamo creando un file di tipo .sh che con i giusti permessi potrà essere eseguito da terminale. In questo caso vorremmo che, scegliendo il percorso giusto e lanciando il file con il nome della nostra repo, il nostro file possa creare delle cartelle e file già precompilati. QUindi un pò di minuti risparmiati.
+
+
+Il terminale di una macchina linux sa dove sono i comandi eseguibili o gli script attraverso la variabile di ambiente PATH
+
+tant'è che se scrivete echo $PATH
+
+Quello che dovete fare è fare in modo che quando lanciate il terminale venga aggiunta la vostra nuova cartella a quell standard del mac
+
+per farlo fate in questo modo:
+
+lanciate il terminale
+
+spostatevi nella cartella utente digitanto
+
+cd <INVIO>
+
+create un file di testo .zsh scrivendo
+
+echo "export PATH=/Users/NomeUser/miei_script/:$PATH" > .zshrc <INVIO>
+
+dove miei_script è la cartella dove metterete i vostri shell files e dove NomeUser è il vostro nome Utende
+
+uscite dal terminale digitando 
+
+exit <INVIO>
+
+rilanciate un terminale e verificate se il path adesso comprende il vostro percorso digtando
+
+echo $PATH <INVIO>
+
+dovreste visualizzare che il percorso del PATH è comprensivo della tua cartella
+
+/Users/NomeUser/miei_script/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+######################----------------##########################
+
+2) poi nella vostra cartella principale, il vostro User per intenderci, create una cartella dove contenere i vostri script. Chiamatela come meglio credete. Esempio my_scripts
+
+######################----------------##########################
+
+3) Aprite un nuovo file con il vostro editore di testo. e ci scrivete questo dentro:
+    'ATTENZIONE: DENTRO IL FILE NEL PUNTO 'CD ../Documents/Boolean' è il mio percorso per la mia cartella, dovete scrivere il vostro!!!!'
+    
+
+#!/bin/sh
+curl -u "Username:tokegithub" https://api.github.com/user/repos -d '{"name":"'"$1"'","private":false}'
+# creazione della cartella in locale
+echo "Init e creo file README e gitignore nella repo $1"
+cd ../Documents/Boolean
+mkdir $1
+cd $1
+git init
+touch README.md
+touch .gitignore
+cat >> .gitignore << EOF
+.DS_Store
+EOF
+######################----------------##########################
+
+3) Salvate il fil con il nome che volete. Esemipo: test.sh 
+
+######################----------------##########################
+
+4) aprite di nuovo il terminale ed eseguite il seguento comando per rendere eseguibile il file.
+
+chmod u+x test.sh
+
+######################----------------##########################
+
+5) Sempre nel terminale scrivete:
+
+cd<INVIO>   
+
+Così tornerete nella cartella principale
+
+######################----------------##########################
+
+6) scegliete poi il seguente percorso:
+
+cd my_scripts<INVIO>
+
+######################----------------##########################
+
+7) e poi eseguite la seguente linea:
+
+./test.sh nomeRepo
+
+ATTENZIONE: importante che aggiungiate il './' prima del file .sh, altrimenti lo leggerà come una riga di comando e vi darà errore!
+
+Dovrebbe ritornare questa scritta sul terminale:
+
+"Init e creo file README e gitignore nella repo $1"
+
+######################----------------##########################
+
+------fine-----
+
+In quel caso se andate nella repo che avevate creato in precedenza ci saranno le cartelle ed i rispettivi file pronti e collegati.
+
+PS: potete compilare i file come meglio credete. Io per esempio mi sono fatto degli eseguibili per lavare-mix, o per l'assetto che usiamo nei nostri progetti. Insomma potete quello che volete
+
+Spero che sia andato Tutto bene nel caso scrivetemi. Spero di non farvi perdere tempo nel caso non funzioni, voglio solo poter darvi una mano :)
+
+Abbracci!
+
+
+
+
+
